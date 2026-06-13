@@ -8,6 +8,8 @@ import Companies from "./pages/Companies";
 import Experiences from "./pages/Experiences";
 import Profile from "./pages/Profile";
 import CompanyDetails from "./pages/CompanyDetails";
+import CreateExperience from "./pages/createExperience";
+import Results from "./pages/Results";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -69,6 +71,22 @@ function App() {
           element={
             <ProtectedRoute>
               <CompanyDetails />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/share-experience"
+          element={
+            <ProtectedRoute>
+              <CreateExperience />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/results"
+          element={
+            <ProtectedRoute>
+              <Results />
             </ProtectedRoute>
           }
         />

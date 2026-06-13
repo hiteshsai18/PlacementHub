@@ -7,25 +7,25 @@ import API from "../services/api";
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 
-function Experiences() {
+function Results() {
   const [
-    experiences,
-    setExperiences,
+    results,
+    setResults,
   ] = useState([]);
 
   useEffect(() => {
-    fetchExperiences();
+    fetchResults();
   }, []);
 
-  const fetchExperiences =
+  const fetchResults =
     async () => {
       try {
         const res =
           await API.get(
-            "/experiences"
+            "/results"
           );
 
-        setExperiences(
+        setResults(
           res.data
         );
 
@@ -51,17 +51,13 @@ function Experiences() {
         <Navbar />
 
         <h1>
-          Interview Experiences
+          Test Results
         </h1>
 
-        {experiences.map(
-          (
-            experience
-          ) => (
+        {results.map(
+          (result) => (
             <div
-              key={
-                experience._id
-              }
+              key={result._id}
               style={{
                 border:
                   "1px solid #ddd",
@@ -73,20 +69,19 @@ function Experiences() {
             >
               <h3>
                 {
-                  experience.company
+                  result.userName
                 }
               </h3>
 
-              <h4>
-                By{" "}
-                {
-                  experience.candidateName
-                }
-              </h4>
-
               <p>
+                Score:
+                {" "}
                 {
-                  experience.content
+                  result.score
+                }
+                /
+                {
+                  result.totalQuestions
                 }
               </p>
             </div>
@@ -97,4 +92,4 @@ function Experiences() {
   );
 }
 
-export default Experiences;
+export default Results;

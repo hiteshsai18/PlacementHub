@@ -23,38 +23,24 @@ function Sidebar() {
           marginTop: "20px",
         }}
       >
-        <Link
-          to="/dashboard"
-          style={{ color: "white" }}
-        >
+        <Link to="/dashboard" style={{ color: "white" }}>
           Dashboard
         </Link>
 
-        <Link
-          to="/aptitude"
-          style={{ color: "white" }}
-        >
+        <Link to="/aptitude" style={{ color: "white" }}>
           Aptitude
         </Link>
 
-        <Link
-          to="/companies"
-          style={{ color: "white" }}
-        >
+        <Link to="/results">Results</Link>
+        <Link to="/companies" style={{ color: "white" }}>
           Companies
         </Link>
 
-        <Link
-          to="/experiences"
-          style={{ color: "white" }}
-        >
+        <Link to="/experiences" style={{ color: "white" }}>
           Interview Experiences
         </Link>
 
-        <Link
-          to="/profile"
-          style={{ color: "white" }}
-        >
+        <Link to="/profile" style={{ color: "white" }}>
           Profile
         </Link>
       </div>
