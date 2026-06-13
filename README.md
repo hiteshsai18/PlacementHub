@@ -164,8 +164,6 @@ Navigation system
 
 Session persistence
 
-## Upcoming Development
-
 ### Day 4
 
 Dashboard UI
@@ -185,6 +183,10 @@ Companies
 Interview Experiences
 
 Profile
+
+Completed
+
+## Upcoming Development
 
 ### Day 5
 
