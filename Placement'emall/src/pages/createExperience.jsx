@@ -5,7 +5,6 @@ function CreateExperience() {
   const [formData, setFormData] =
     useState({
       company: "",
-      candidateName: "",
       content: "",
     });
 
@@ -33,12 +32,15 @@ function CreateExperience() {
 
         setFormData({
           company: "",
-          candidateName: "",
           content: "",
         });
 
       } catch (error) {
-        console.log(error);
+        alert(
+          error.response?.data
+            ?.message ||
+            "Failed"
+        );
       }
     };
 
@@ -57,21 +59,6 @@ function CreateExperience() {
           placeholder="Company"
           value={
             formData.company
-          }
-          onChange={
-            handleChange
-          }
-        />
-
-        <br />
-        <br />
-
-        <input
-          type="text"
-          name="candidateName"
-          placeholder="Your Name"
-          value={
-            formData.candidateName
           }
           onChange={
             handleChange

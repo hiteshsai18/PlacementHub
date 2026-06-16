@@ -16,23 +16,22 @@ const protect = async (req, res, next) => {
         process.env.JWT_SECRET
       );
 
-      req.user = await User.findById(decoded.id)
-        .select("-password");
+      req.user = await User.findById(
+        decoded.id
+      ).select("-password");
 
-      next();
+      return next();
 
     } catch (error) {
       return res.status(401).json({
-        message: "Not authorized"
+        message: "Not authorized, token failed",
       });
     }
   }
 
-  if (!token) {
-    return res.status(401).json({
-      message: "No token"
-    });
-  }
+  return res.status(401).json({
+    message: "Not authorized, no token",
+  });
 };
 
 module.exports = { protect };

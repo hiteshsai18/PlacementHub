@@ -10,7 +10,7 @@ import Profile from "./pages/Profile";
 import CompanyDetails from "./pages/CompanyDetails";
 import CreateExperience from "./pages/createExperience";
 import Results from "./pages/Results";
-
+import Analytics from "./pages/Analytics";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
@@ -87,6 +87,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Results />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/analytics"
+          element={
+            <ProtectedRoute>
+              <Analytics />
             </ProtectedRoute>
           }
         />

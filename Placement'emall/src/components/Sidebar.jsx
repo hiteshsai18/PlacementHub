@@ -26,7 +26,7 @@ function Sidebar() {
         <Link to="/dashboard" style={{ color: "white" }}>
           Dashboard
         </Link>
-
+        <Link to="/analytics">Analytics</Link>
         <Link to="/aptitude" style={{ color: "white" }}>
           Aptitude
         </Link>

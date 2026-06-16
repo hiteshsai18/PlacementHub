@@ -4,8 +4,6 @@ import {
 } from "react";
 
 import API from "../services/api";
-import Sidebar from "../components/Sidebar";
-import Navbar from "../components/Navbar";
 
 function Aptitude() {
   const [
@@ -23,16 +21,53 @@ function Aptitude() {
     setScore,
   ] = useState(null);
 
+  const [
+    category,
+    setCategory,
+  ] = useState(
+    "Quantitative"
+  );
+
+  const [
+    difficulty,
+    setDifficulty,
+  ] = useState("Easy");
+
+  const [
+    timeLeft,
+    setTimeLeft,
+  ] = useState(600);
+
   useEffect(() => {
     fetchQuestions();
   }, []);
+
+  useEffect(() => {
+    if (
+      timeLeft <= 0
+    ) {
+      submitTest();
+      return;
+    }
+
+    const timer =
+      setInterval(() => {
+        setTimeLeft(
+          (prev) =>
+            prev - 1
+        );
+      }, 1000);
+
+    return () =>
+      clearInterval(timer);
+  }, [timeLeft]);
 
   const fetchQuestions =
     async () => {
       try {
         const res =
           await API.get(
-            "/questions"
+            `/questions?category=${category}&difficulty=${difficulty}`
           );
 
         setQuestions(
@@ -44,160 +79,201 @@ function Aptitude() {
       }
     };
 
-  const handleSelect =
+  const handleAnswer =
     (
       questionId,
-      option
+      answer
     ) => {
       setAnswers({
         ...answers,
         [questionId]:
-          option,
+          answer,
       });
     };
 
   const submitTest =
-async () => {
-  let total = 0;
+    async () => {
+      let total = 0;
 
-  questions.forEach(
-    (question) => {
-      if (
-        answers[
-          question._id
-        ] ===
-        question.answer
-      ) {
-        total++;
-      }
-    }
-  );
-
-  setScore(total);
-
-  try {
-    const user =
-      JSON.parse(
-        localStorage.getItem(
-          "user"
-        )
+      questions.forEach(
+        (question) => {
+          if (
+            answers[
+              question._id
+            ] ===
+            question.answer
+          ) {
+            total++;
+          }
+        }
       );
 
-    await API.post(
-      "/results",
-      {
-        userName:
-          user.name,
-        score: total,
-        totalQuestions:
-          questions.length,
-      }
-    );
+      setScore(total);
 
-  } catch (error) {
-    console.log(error);
-  }
-};
+      try {
+        await API.post(
+          "/results",
+          {
+            score: total,
+            totalQuestions:
+              questions.length,
+          }
+        );
+
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
   return (
     <div
       style={{
-        display: "flex",
+        padding: "20px",
       }}
     >
-      <Sidebar />
+      <h1>
+        Aptitude Test
+      </h1>
 
-      <div
-        style={{
-          flex: 1,
-          padding: "20px",
-        }}
+      <h2>
+        Time Left:
+        {" "}
+        {
+          Math.floor(
+            timeLeft /
+              60
+          )
+        }
+        :
+        {String(
+          timeLeft %
+            60
+        ).padStart(
+          2,
+          "0"
+        )}
+      </h2>
+
+      <select
+        value={category}
+        onChange={(e) =>
+          setCategory(
+            e.target.value
+          )
+        }
       >
-        <Navbar />
+        <option>
+          Quantitative
+        </option>
 
-        <h1>
-          Aptitude Test
-        </h1>
+        <option>
+          Reasoning
+        </option>
 
-        {questions.map(
-          (
-            question,
-            index
-          ) => (
-            <div
-              key={
-                question._id
+        <option>
+          Verbal
+        </option>
+      </select>
+
+      <select
+        value={
+          difficulty
+        }
+        onChange={(e) =>
+          setDifficulty(
+            e.target.value
+          )
+        }
+      >
+        <option>
+          Easy
+        </option>
+
+        <option>
+          Medium
+        </option>
+
+        <option>
+          Hard
+        </option>
+      </select>
+
+      <button
+        onClick={
+          fetchQuestions
+        }
+      >
+        Start Test
+      </button>
+
+      <hr />
+
+      {questions.map(
+        (question) => (
+          <div
+            key={
+              question._id
+            }
+          >
+            <h3>
+              {
+                question.question
               }
-              style={{
-                border:
-                  "1px solid #ddd",
-                padding:
-                  "15px",
-                marginBottom:
-                  "15px",
-              }}
-            >
-              <h3>
-                {index + 1}.
-                {" "}
-                {
-                  question.question
-                }
-              </h3>
+            </h3>
 
-              {question.options.map(
-                (
-                  option
-                ) => (
-                  <div
-                    key={
+            {question.options.map(
+              (
+                option
+              ) => (
+                <div
+                  key={
+                    option
+                  }
+                >
+                  <input
+                    type="radio"
+                    name={
+                      question._id
+                    }
+                    value={
                       option
                     }
-                  >
-                    <input
-                      type="radio"
-                      name={
-                        question._id
-                      }
-                      value={
+                    onChange={() =>
+                      handleAnswer(
+                        question._id,
                         option
-                      }
-                      onChange={() =>
-                        handleSelect(
-                          question._id,
-                          option
-                        )
-                      }
-                    />
+                      )
+                    }
+                  />
 
-                    {option}
-                  </div>
-                )
-              )}
-            </div>
-          )
-        )}
+                  {option}
+                </div>
+              )
+            )}
 
-        <button
-          onClick={
-            submitTest
+            <br />
+          </div>
+        )
+      )}
+
+      <button
+        onClick={
+          submitTest
+        }
+      >
+        Submit Test
+      </button>
+
+      {score !== null && (
+        <h2>
+          Score:
+          {" "}
+          {score}/
+          {
+            questions.length
           }
-        >
-          Submit Test
-        </button>
-
-        {score !== null && (
-          <h2>
-            Score:
-            {" "}
-            {score}
-            {" / "}
-            {
-              questions.length
-            }
-          </h2>
-        )}
-      </div>
+        </h2>
+      )}
     </div>
   );
 }

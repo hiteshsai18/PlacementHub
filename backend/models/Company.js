@@ -12,6 +12,15 @@ const companySchema = new mongoose.Schema(
       required: true,
     },
 
+    category: {
+      type: String,
+      enum: [
+        "Service Based",
+        "Product Based",
+      ],
+      required: true,
+    },
+
     hiringProcess: {
       type: [String],
       default: [],

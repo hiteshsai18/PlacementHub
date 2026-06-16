@@ -16,52 +16,61 @@ const generateToken = (id) => {
 // REGISTER USER
 const registerUser = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password } =
+      req.body;
 
-    // Validation
     if (!name || !email || !password) {
       return res.status(400).json({
-        message: "Please fill all fields",
+        message:
+          "Please fill all fields",
       });
     }
 
-    // Check existing user
-    const userExists = await User.findOne({
-      email,
-    });
+    const userExists =
+      await User.findOne({
+        email,
+      });
 
     if (userExists) {
       return res.status(400).json({
-        message: "User already exists",
+        message:
+          "User already exists",
       });
     }
 
-    // Hash Password
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(
-      password,
-      salt
-    );
+    const salt =
+      await bcrypt.genSalt(10);
 
-    // Create User
-    const user = await User.create({
-      name,
-      email,
-      password: hashedPassword,
-    });
+    const hashedPassword =
+      await bcrypt.hash(
+        password,
+        salt
+      );
+
+    const user =
+      await User.create({
+        name,
+        email,
+        password:
+          hashedPassword,
+        role: "student",
+      });
 
     res.status(201).json({
       _id: user._id,
       name: user.name,
       email: user.email,
-      token: generateToken(user._id),
+      role: user.role,
+      token:
+        generateToken(
+          user._id
+        ),
     });
 
   } catch (error) {
-    console.error(error);
-
     res.status(500).json({
-      message: error.message,
+      message:
+        error.message,
     });
   }
 };
@@ -69,17 +78,13 @@ const registerUser = async (req, res) => {
 // LOGIN USER
 const loginUser = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password } =
+      req.body;
 
-    if (!email || !password) {
-      return res.status(400).json({
-        message: "Please provide email and password",
+    const user =
+      await User.findOne({
+        email,
       });
-    }
-
-    const user = await User.findOne({
-      email,
-    });
 
     if (
       user &&
@@ -92,39 +97,107 @@ const loginUser = async (req, res) => {
         _id: user._id,
         name: user.name,
         email: user.email,
-        token: generateToken(user._id),
+        role: user.role,
+        token:
+          generateToken(
+            user._id
+          ),
       });
     }
 
     res.status(401).json({
-      message: "Invalid credentials",
+      message:
+        "Invalid credentials",
     });
 
   } catch (error) {
-    console.error(error);
-
     res.status(500).json({
-      message: error.message,
+      message:
+        error.message,
     });
   }
 };
 
-// GET PROFILE (Protected Route)
-const getProfile = async (req, res) => {
+// GET PROFILE
+const getProfile = async (
+  req,
+  res
+) => {
   try {
-    res.status(200).json({
+    res.json({
       _id: req.user._id,
       name: req.user.name,
       email: req.user.email,
       role: req.user.role,
-      createdAt: req.user.createdAt,
+      createdAt:
+        req.user.createdAt,
     });
 
   } catch (error) {
-    console.error(error);
-
     res.status(500).json({
-      message: error.message,
+      message:
+        error.message,
+    });
+  }
+};
+
+// UPDATE PROFILE
+const updateProfile = async (
+  req,
+  res
+) => {
+  try {
+    const user =
+      await User.findById(
+        req.user._id
+      );
+
+    if (!user) {
+      return res.status(404).json({
+        message:
+          "User not found",
+      });
+    }
+
+    user.name =
+      req.body.name ||
+      user.name;
+
+    if (req.body.password) {
+      const salt =
+        await bcrypt.genSalt(
+          10
+        );
+
+      user.password =
+        await bcrypt.hash(
+          req.body.password,
+          salt
+        );
+    }
+
+    const updatedUser =
+      await user.save();
+
+    res.json({
+      _id:
+        updatedUser._id,
+      name:
+        updatedUser.name,
+      email:
+        updatedUser.email,
+      role:
+        updatedUser.role,
+      token:
+        generateToken(
+          updatedUser._id
+        ),
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      message:
+        error.message,
     });
   }
 };
@@ -133,4 +206,5 @@ module.exports = {
   registerUser,
   loginUser,
   getProfile,
+  updateProfile,
 };

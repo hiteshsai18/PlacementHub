@@ -13,6 +13,9 @@ function Experiences() {
     setExperiences,
   ] = useState([]);
 
+  const [search, setSearch] =
+    useState("");
+
   useEffect(() => {
     fetchExperiences();
   }, []);
@@ -34,6 +37,21 @@ function Experiences() {
       }
     };
 
+  const filteredExperiences =
+    experiences.filter(
+      (experience) =>
+        experience.company
+          .toLowerCase()
+          .includes(
+            search.toLowerCase()
+          ) ||
+        experience.content
+          .toLowerCase()
+          .includes(
+            search.toLowerCase()
+          )
+    );
+
   return (
     <div
       style={{
@@ -54,7 +72,21 @@ function Experiences() {
           Interview Experiences
         </h1>
 
-        {experiences.map(
+        <input
+          type="text"
+          placeholder="Search Experience"
+          value={search}
+          onChange={(e) =>
+            setSearch(
+              e.target.value
+            )
+          }
+        />
+
+        <br />
+        <br />
+
+        {filteredExperiences.map(
           (
             experience
           ) => (
@@ -76,13 +108,6 @@ function Experiences() {
                   experience.company
                 }
               </h3>
-
-              <h4>
-                By{" "}
-                {
-                  experience.candidateName
-                }
-              </h4>
 
               <p>
                 {

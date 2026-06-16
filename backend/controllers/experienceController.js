@@ -5,7 +5,13 @@ const getExperiences =
   async (req, res) => {
     try {
       const experiences =
-        await Experience.find()
+        await Experience.find({
+          user: req.user._id,
+        })
+          .populate(
+            "user",
+            "name email"
+          )
           .sort({
             createdAt: -1,
           });
@@ -24,14 +30,13 @@ const createExperience =
     try {
       const {
         company,
-        candidateName,
         content,
       } = req.body;
 
       const experience =
         await Experience.create({
+          user: req.user._id,
           company,
-          candidateName,
           content,
         });
 
