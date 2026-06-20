@@ -10,7 +10,8 @@ require(
 const resultRoutes =
 require("./routes/resultRoutes");
 dotenv.config();
-
+const leaderboardRoutes =
+require("./routes/leaderboardRoutes");
 const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
 const questionRoutes =
@@ -41,6 +42,10 @@ app.use("/api/auth", authRoutes);
 app.use(
   "/api/questions",
   questionRoutes
+);
+app.use(
+  "/api/leaderboard",
+  leaderboardRoutes
 );
 const PORT = process.env.PORT || 5000;
 

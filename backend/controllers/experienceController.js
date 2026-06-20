@@ -51,7 +51,75 @@ const createExperience =
     }
   };
 
+const updateExperience =
+  async (req, res) => {
+    try {
+      const experience =
+        await Experience.findOne({
+          _id: req.params.id,
+          user: req.user._id,
+        });
+
+      if (!experience) {
+        return res.status(404).json({
+          message:
+            "Experience not found",
+        });
+      }
+
+      experience.company =
+        req.body.company ||
+        experience.company;
+
+      experience.content =
+        req.body.content ||
+        experience.content;
+
+      const updated =
+        await experience.save();
+
+      res.json(updated);
+
+    } catch (error) {
+      res.status(500).json({
+        message: error.message,
+      });
+    }
+  };
+
+const deleteExperience =
+  async (req, res) => {
+    try {
+      const experience =
+        await Experience.findOne({
+          _id: req.params.id,
+          user: req.user._id,
+        });
+
+      if (!experience) {
+        return res.status(404).json({
+          message:
+            "Experience not found",
+        });
+      }
+
+      await experience.deleteOne();
+
+      res.json({
+        message:
+          "Experience deleted",
+      });
+
+    } catch (error) {
+      res.status(500).json({
+        message: error.message,
+      });
+    }
+  };
+
 module.exports = {
   getExperiences,
   createExperience,
+  updateExperience,
+  deleteExperience,
 };
