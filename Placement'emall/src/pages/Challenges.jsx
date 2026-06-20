@@ -1,21 +1,45 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import {
+  useEffect,
+  useState,
+} from "react";
+
+import {
+  Link,
+} from "react-router-dom";
+
 import API from "../services/api";
+import Sidebar from "../components/Sidebar";
+import Navbar from "../components/Navbar";
 
 function Challenges() {
-  const [challenges, setChallenges] =
-    useState([]);
+  const [
+    challenges,
+    setChallenges,
+  ] = useState([]);
+
+  const [search, setSearch] =
+    useState("");
+
+  const [
+    difficulty,
+    setDifficulty,
+  ] = useState("");
 
   useEffect(() => {
     fetchChallenges();
-  }, []);
+  }, [difficulty]);
 
   const fetchChallenges =
     async () => {
       try {
+        const url =
+          difficulty
+            ? `/challenges?difficulty=${difficulty}`
+            : "/challenges";
+
         const res =
           await API.get(
-            "/challenges"
+            url
           );
 
         setChallenges(
@@ -27,53 +51,110 @@ function Challenges() {
       }
     };
 
+  const filtered =
+    challenges.filter(
+      (challenge) =>
+        challenge.title
+          .toLowerCase()
+          .includes(
+            search.toLowerCase()
+          )
+    );
+
   return (
     <div
       style={{
-        padding: "20px",
+        display: "flex",
       }}
     >
-      <h1>
-        Coding Challenges
-      </h1>
+      <Sidebar />
 
-      {challenges.map(
-        (challenge) => (
-          <div
-            key={
-              challenge._id
-            }
-            style={{
-              border:
-                "1px solid #ddd",
-              padding:
-                "15px",
-              marginBottom:
-                "15px",
-            }}
-          >
-            <h3>
-              {
-                challenge.title
+      <div
+        style={{
+          flex: 1,
+          padding: "20px",
+        }}
+      >
+        <Navbar />
+
+        <h1>
+          Coding Challenges
+        </h1>
+
+        <input
+          type="text"
+          placeholder="Search"
+          value={search}
+          onChange={(e) =>
+            setSearch(
+              e.target.value
+            )
+          }
+        />
+
+        <br />
+        <br />
+
+        <select
+          value={
+            difficulty
+          }
+          onChange={(e) =>
+            setDifficulty(
+              e.target.value
+            )
+          }
+        >
+          <option value="">
+            All
+          </option>
+
+          <option>
+            Easy
+          </option>
+
+          <option>
+            Medium
+          </option>
+
+          <option>
+            Hard
+          </option>
+        </select>
+
+        <br />
+        <br />
+
+        {filtered.map(
+          (
+            challenge
+          ) => (
+            <div
+              key={
+                challenge._id
               }
-            </h3>
-
-            <p>
-              Difficulty:
-              {" "}
-              {
-                challenge.difficulty
-              }
-            </p>
-
-            <Link
-              to={`/challenges/${challenge._id}`}
             >
-              Solve Challenge
-            </Link>
-          </div>
-        )
-      )}
+              <h3>
+                {
+                  challenge.title
+                }
+              </h3>
+
+              <p>
+                {
+                  challenge.difficulty
+                }
+              </p>
+
+              <Link
+                to={`/challenges/${challenge._id}`}
+              >
+                Open
+              </Link>
+            </div>
+          )
+        )}
+      </div>
     </div>
   );
 }

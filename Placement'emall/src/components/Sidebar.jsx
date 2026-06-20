@@ -38,7 +38,7 @@ function Sidebar() {
         <Link to="/companies" style={{ color: "white" }}>
           Companies
         </Link>
-
+        <Link to="/coding-dashboard">Coding Dashboard</Link>
         <Link to="/experiences" style={{ color: "white" }}>
           Interview Experiences
         </Link>

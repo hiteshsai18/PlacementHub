@@ -5,6 +5,9 @@ import {
 
 import API from "../services/api";
 
+import Sidebar from "../components/Sidebar";
+import Navbar from "../components/Navbar";
+
 import {
   LineChart,
   Line,
@@ -44,88 +47,115 @@ function Analytics() {
 
   if (!analytics) {
     return (
-      <h2>
-        Loading...
-      </h2>
+      <div
+        style={{
+          display: "flex",
+        }}
+      >
+        <Sidebar />
+
+        <div
+          style={{
+            flex: 1,
+            padding: "20px",
+          }}
+        >
+          <Navbar />
+          <h2>
+            Loading...
+          </h2>
+        </div>
+      </div>
     );
   }
 
   return (
     <div
       style={{
-        padding: "20px",
+        display: "flex",
       }}
     >
-      <h1>
-        Analytics Dashboard
-      </h1>
-
-      <div>
-        <h3>
-          Tests Taken:
-          {" "}
-          {
-            analytics.testsTaken
-          }
-        </h3>
-
-        <h3>
-          Best Score:
-          {" "}
-          {
-            analytics.bestScore
-          }
-        </h3>
-
-        <h3>
-          Average Score:
-          {" "}
-          {
-            analytics.averageScore
-          }
-        </h3>
-
-        <h3>
-          Latest Score:
-          {" "}
-          {
-            analytics.latestScore
-          }
-        </h3>
-      </div>
+      <Sidebar />
 
       <div
         style={{
-          width: "100%",
-          height: "400px",
-          marginTop:
-            "30px",
+          flex: 1,
+          padding: "20px",
         }}
       >
-        <ResponsiveContainer>
-          <LineChart
-            data={
-              analytics.chartData
+        <Navbar />
+
+        <h1>
+          Analytics Dashboard
+        </h1>
+
+        <div>
+          <h3>
+            Tests Taken:
+            {" "}
+            {
+              analytics.testsTaken
             }
-          >
-            <CartesianGrid
-              strokeDasharray="3 3"
-            />
+          </h3>
 
-            <XAxis
-              dataKey="test"
-            />
+          <h3>
+            Best Score:
+            {" "}
+            {
+              analytics.bestScore
+            }
+          </h3>
 
-            <YAxis />
+          <h3>
+            Average Score:
+            {" "}
+            {
+              analytics.averageScore
+            }
+          </h3>
 
-            <Tooltip />
+          <h3>
+            Latest Score:
+            {" "}
+            {
+              analytics.latestScore
+            }
+          </h3>
+        </div>
 
-            <Line
-              type="monotone"
-              dataKey="score"
-            />
-          </LineChart>
-        </ResponsiveContainer>
+        <div
+          style={{
+            width: "100%",
+            height: "400px",
+            marginTop:
+              "30px",
+          }}
+        >
+          <ResponsiveContainer>
+            <LineChart
+              data={
+                analytics.chartData
+              }
+            >
+              <CartesianGrid
+                strokeDasharray="3 3"
+              />
+
+              <XAxis
+                dataKey="test"
+              />
+
+              <YAxis />
+
+              <Tooltip />
+
+              <Line
+                type="monotone"
+                dataKey="score"
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
       </div>
     </div>
   );

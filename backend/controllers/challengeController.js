@@ -1,13 +1,24 @@
 const Challenge =
-  require(
-    "../models/Challenge"
-  );
+  require("../models/Challenge");
 
 const getChallenges =
   async (req, res) => {
     try {
+      const {
+        difficulty,
+      } = req.query;
+
+      let filter = {};
+
+      if (difficulty) {
+        filter.difficulty =
+          difficulty;
+      }
+
       const challenges =
-        await Challenge.find();
+        await Challenge.find(
+          filter
+        );
 
       res.json(
         challenges

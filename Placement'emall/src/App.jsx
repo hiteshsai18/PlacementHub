@@ -15,6 +15,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Challenges from "./pages/Challenges";
 import ChallengeDetails from "./pages/ChallengeDetails";
 import MySubmissions from "./pages/MySubmissions";
+import CodingDashboard from "./pages/CodingDashboard";
 
 function App() {
   return (
@@ -124,6 +125,14 @@ function App() {
           element={
             <ProtectedRoute>
               <MySubmissions />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/coding-dashboard"
+          element={
+            <ProtectedRoute>
+              <CodingDashboard />
             </ProtectedRoute>
           }
         />

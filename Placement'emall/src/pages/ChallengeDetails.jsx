@@ -8,6 +8,8 @@ import {
 } from "react-router-dom";
 
 import API from "../services/api";
+import Sidebar from "../components/Sidebar";
+import Navbar from "../components/Navbar";
 
 function ChallengeDetails() {
   const { id } =
@@ -95,58 +97,69 @@ function ChallengeDetails() {
   return (
     <div
       style={{
-        padding: "20px",
+        display: "flex",
       }}
     >
-      <h1>
-        {
-          challenge.title
-        }
-      </h1>
+      <Sidebar />
 
-      <h3>
-        Difficulty:
-        {" "}
-        {
-          challenge.difficulty
-        }
-      </h3>
-
-      <p>
-        {
-          challenge.description
-        }
-      </p>
-
-      {solved && (
-        <h2>
-          ✅ Solved
-        </h2>
-      )}
-
-      <textarea
-        rows="15"
+      <div
         style={{
-          width: "100%",
+          flex: 1,
+          padding: "20px",
         }}
-        value={code}
-        onChange={(e) =>
-          setCode(
-            e.target.value
-          )
-        }
-      />
-
-      <br />
-      <br />
-
-      <button
-        onClick={
-          submitSolution
-        }
       >
-        Submit
-      </button>
+        <Navbar />
+
+        <h1>
+          {
+            challenge.title
+          }
+        </h1>
+
+        <h3>
+          Difficulty:
+          {" "}
+          {
+            challenge.difficulty
+          }
+        </h3>
+
+        <p>
+          {
+            challenge.description
+          }
+        </p>
+
+        {solved && (
+          <h2>
+            Solved
+          </h2>
+        )}
+
+        <textarea
+          rows="15"
+          style={{
+            width: "100%",
+          }}
+          value={code}
+          onChange={(e) =>
+            setCode(
+              e.target.value
+            )
+          }
+        />
+
+        <br />
+        <br />
+
+        <button
+          onClick={
+            submitSolution
+          }
+        >
+          Submit
+        </button>
+      </div>
     </div>
   );
 }

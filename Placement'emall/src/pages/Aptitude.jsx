@@ -4,6 +4,8 @@ import {
 } from "react";
 
 import API from "../services/api";
+import Sidebar from "../components/Sidebar";
+import Navbar from "../components/Navbar";
 
 function Aptitude() {
   const [
@@ -128,152 +130,161 @@ function Aptitude() {
   return (
     <div
       style={{
-        padding: "20px",
+        display: "flex",
       }}
     >
-      <h1>
-        Aptitude Test
-      </h1>
+      <Sidebar />
 
-      <h2>
-        Time Left:
-        {" "}
-        {
-          Math.floor(
-            timeLeft /
-              60
-          )
-        }
-        :
-        {String(
-          timeLeft %
-            60
-        ).padStart(
-          2,
-          "0"
-        )}
-      </h2>
-
-      <select
-        value={category}
-        onChange={(e) =>
-          setCategory(
-            e.target.value
-          )
-        }
+      <div
+        style={{
+          flex: 1,
+          padding: "20px",
+        }}
       >
-        <option>
-          Quantitative
-        </option>
+        <Navbar />
 
-        <option>
-          Reasoning
-        </option>
+        <h1>
+          Aptitude Test
+        </h1>
 
-        <option>
-          Verbal
-        </option>
-      </select>
+        <h2>
+          Time Left:
+          {" "}
+          {
+            Math.floor(
+              timeLeft / 60
+            )
+          }
+          :
+          {String(
+            timeLeft % 60
+          ).padStart(
+            2,
+            "0"
+          )}
+        </h2>
 
-      <select
-        value={
-          difficulty
-        }
-        onChange={(e) =>
-          setDifficulty(
-            e.target.value
-          )
-        }
-      >
-        <option>
-          Easy
-        </option>
+        <select
+          value={category}
+          onChange={(e) =>
+            setCategory(
+              e.target.value
+            )
+          }
+        >
+          <option>
+            Quantitative
+          </option>
 
-        <option>
-          Medium
-        </option>
+          <option>
+            Reasoning
+          </option>
 
-        <option>
-          Hard
-        </option>
-      </select>
+          <option>
+            Verbal
+          </option>
+        </select>
 
-      <button
-        onClick={
-          fetchQuestions
-        }
-      >
-        Start Test
-      </button>
+        <select
+          value={
+            difficulty
+          }
+          onChange={(e) =>
+            setDifficulty(
+              e.target.value
+            )
+          }
+        >
+          <option>
+            Easy
+          </option>
 
-      <hr />
+          <option>
+            Medium
+          </option>
 
-      {questions.map(
-        (question) => (
-          <div
-            key={
-              question._id
-            }
-          >
-            <h3>
-              {
-                question.question
+          <option>
+            Hard
+          </option>
+        </select>
+
+        <button
+          onClick={
+            fetchQuestions
+          }
+        >
+          Start Test
+        </button>
+
+        <hr />
+
+        {questions.map(
+          (question) => (
+            <div
+              key={
+                question._id
               }
-            </h3>
+            >
+              <h3>
+                {
+                  question.question
+                }
+              </h3>
 
-            {question.options.map(
-              (
-                option
-              ) => (
-                <div
-                  key={
-                    option
-                  }
-                >
-                  <input
-                    type="radio"
-                    name={
-                      question._id
-                    }
-                    value={
+              {question.options.map(
+                (
+                  option
+                ) => (
+                  <div
+                    key={
                       option
                     }
-                    onChange={() =>
-                      handleAnswer(
-                        question._id,
+                  >
+                    <input
+                      type="radio"
+                      name={
+                        question._id
+                      }
+                      value={
                         option
-                      )
-                    }
-                  />
+                      }
+                      onChange={() =>
+                        handleAnswer(
+                          question._id,
+                          option
+                        )
+                      }
+                    />
 
-                  {option}
-                </div>
-              )
-            )}
+                    {option}
+                  </div>
+                )
+              )}
 
-            <br />
-          </div>
-        )
-      )}
+              <br />
+            </div>
+          )
+        )}
 
-      <button
-        onClick={
-          submitTest
-        }
-      >
-        Submit Test
-      </button>
-
-      {score !== null && (
-        <h2>
-          Score:
-          {" "}
-          {score}/
-          {
-            questions.length
+        <button
+          onClick={
+            submitTest
           }
-        </h2>
-      )}
+        >
+          Submit Test
+        </button>
+
+        {score !== null && (
+          <h2>
+            Score:
+            {" "}
+            {score}/
+            {
+              questions.length
+            }
+          </h2>
+        )}
+      </div>
     </div>
   );
 }

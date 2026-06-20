@@ -4,6 +4,8 @@ import {
 } from "react";
 
 import API from "../services/api";
+import Sidebar from "../components/Sidebar";
+import Navbar from "../components/Navbar";
 
 function MySubmissions() {
   const [
@@ -35,58 +37,69 @@ function MySubmissions() {
   return (
     <div
       style={{
-        padding: "20px",
+        display: "flex",
       }}
     >
-      <h1>
-        My Submissions
-      </h1>
+      <Sidebar />
 
-      {submissions.map(
-        (
-          submission
-        ) => (
-          <div
-            key={
-              submission._id
-            }
-            style={{
-              border:
-                "1px solid #ddd",
-              padding:
-                "15px",
-              marginBottom:
-                "15px",
-            }}
-          >
-            <h3>
-              {
-                submission
-                  .challenge
-                  .title
-              }
-            </h3>
+      <div
+        style={{
+          flex: 1,
+          padding: "20px",
+        }}
+      >
+        <Navbar />
 
-            <p>
-              Difficulty:
-              {" "}
-              {
-                submission
-                  .challenge
-                  .difficulty
-              }
-            </p>
+        <h1>
+          My Submissions
+        </h1>
 
-            <p>
-              Status:
-              {" "}
-              {
-                submission.status
+        {submissions.map(
+          (
+            submission
+          ) => (
+            <div
+              key={
+                submission._id
               }
-            </p>
-          </div>
-        )
-      )}
+              style={{
+                border:
+                  "1px solid #ddd",
+                padding:
+                  "15px",
+                marginBottom:
+                  "15px",
+              }}
+            >
+              <h3>
+                {
+                  submission
+                    .challenge
+                    .title
+                }
+              </h3>
+
+              <p>
+                Difficulty:
+                {" "}
+                {
+                  submission
+                    .challenge
+                    .difficulty
+                }
+              </p>
+
+              <p>
+                Status:
+                {" "}
+                {
+                  submission.status
+                }
+              </p>
+            </div>
+          )
+        )}
+      </div>
     </div>
   );
 }

@@ -7,6 +7,10 @@ const experienceRoutes =
 require(
   "./routes/experienceRoutes"
 );
+const codingDashboardRoutes =
+require(
+"./routes/codingDashboardRoutes"
+);
 const dashboardRoutes =
   require(
     "./routes/dashboardRoutes"
@@ -45,6 +49,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(
   "/api/experiences",
   experienceRoutes
+);
+app.use(
+"/api/coding-dashboard",
+codingDashboardRoutes
 );
 app.use(
   "/api/dashboard",

@@ -5,6 +5,9 @@ import {
 
 import API from "../services/api";
 
+import Sidebar from "../components/Sidebar";
+import Navbar from "../components/Navbar";
+
 function Dashboard() {
   const [
     stats,
@@ -34,108 +37,127 @@ function Dashboard() {
 
   if (!stats) {
     return (
-      <h2>
-        Loading...
-      </h2>
+      <div
+        style={{
+          display: "flex",
+        }}
+      >
+        <Sidebar />
+
+        <div
+          style={{
+            flex: 1,
+            padding: "20px",
+          }}
+        >
+          <Navbar />
+          <h2>Loading...</h2>
+        </div>
+      </div>
     );
   }
 
   return (
     <div
       style={{
-        padding: "20px",
+        display: "flex",
       }}
     >
-      <h1>
-        Welcome,
-        {" "}
-        {stats.name}
-      </h1>
+      <Sidebar />
 
       <div
         style={{
-          display: "grid",
-          gridTemplateColumns:
-            "repeat(2,1fr)",
-          gap: "20px",
-          marginTop:
-            "20px",
+          flex: 1,
+          padding: "20px",
         }}
       >
-        <div
-          style={{
-            border:
-              "1px solid #ddd",
-            padding:
-              "20px",
-          }}
-        >
-          <h2>
-            Tests Taken
-          </h2>
+        <Navbar />
 
-          <h1>
-            {
-              stats.testsTaken
-            }
-          </h1>
-        </div>
+        <h1>
+          Welcome, {stats.name}
+        </h1>
 
         <div
           style={{
-            border:
-              "1px solid #ddd",
-            padding:
-              "20px",
+            display: "grid",
+            gridTemplateColumns:
+              "repeat(2,1fr)",
+            gap: "20px",
+            marginTop: "20px",
           }}
         >
-          <h2>
-            Best Score
-          </h2>
+          <div
+            style={{
+              border:
+                "1px solid #ddd",
+              padding: "20px",
+            }}
+          >
+            <h2>
+              Tests Taken
+            </h2>
 
-          <h1>
-            {
-              stats.bestScore
-            }
-          </h1>
-        </div>
+            <h1>
+              {
+                stats.testsTaken
+              }
+            </h1>
+          </div>
 
-        <div
-          style={{
-            border:
-              "1px solid #ddd",
-            padding:
-              "20px",
-          }}
-        >
-          <h2>
-            Average Score
-          </h2>
+          <div
+            style={{
+              border:
+                "1px solid #ddd",
+              padding: "20px",
+            }}
+          >
+            <h2>
+              Best Score
+            </h2>
 
-          <h1>
-            {
-              stats.averageScore
-            }
-          </h1>
-        </div>
+            <h1>
+              {
+                stats.bestScore
+              }
+            </h1>
+          </div>
 
-        <div
-          style={{
-            border:
-              "1px solid #ddd",
-            padding:
-              "20px",
-          }}
-        >
-          <h2>
-            Experiences Shared
-          </h2>
+          <div
+            style={{
+              border:
+                "1px solid #ddd",
+              padding: "20px",
+            }}
+          >
+            <h2>
+              Average Score
+            </h2>
 
-          <h1>
-            {
-              stats.experiencesShared
-            }
-          </h1>
+            <h1>
+              {
+                stats.averageScore
+              }
+            </h1>
+          </div>
+
+          <div
+            style={{
+              border:
+                "1px solid #ddd",
+              padding: "20px",
+            }}
+          >
+            <h2>
+              Experiences Shared
+            </h2>
+
+            <h1>
+              {
+                stats
+                  .experiencesShared
+              }
+            </h1>
+          </div>
         </div>
       </div>
     </div>
