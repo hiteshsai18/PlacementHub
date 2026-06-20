@@ -12,6 +12,9 @@ import CreateExperience from "./pages/createExperience";
 import Results from "./pages/Results";
 import Analytics from "./pages/Analytics";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Challenges from "./pages/Challenges";
+import ChallengeDetails from "./pages/ChallengeDetails";
+import MySubmissions from "./pages/MySubmissions";
 
 function App() {
   return (
@@ -95,6 +98,32 @@ function App() {
           element={
             <ProtectedRoute>
               <Analytics />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/challenges"
+          element={
+            <ProtectedRoute>
+              <Challenges />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/challenges/:id"
+          element={
+            <ProtectedRoute>
+              <ChallengeDetails />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/submissions"
+          element={
+            <ProtectedRoute>
+              <MySubmissions />
             </ProtectedRoute>
           }
         />

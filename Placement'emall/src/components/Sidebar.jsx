@@ -30,6 +30,9 @@ function Sidebar() {
         <Link to="/aptitude" style={{ color: "white" }}>
           Aptitude
         </Link>
+        <Link to="/challenges">Coding Challenges</Link>
+
+        <Link to="/submissions">My Submissions</Link>
 
         <Link to="/results">Results</Link>
         <Link to="/companies" style={{ color: "white" }}>

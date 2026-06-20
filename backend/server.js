@@ -7,6 +7,25 @@ const experienceRoutes =
 require(
   "./routes/experienceRoutes"
 );
+const dashboardRoutes =
+  require(
+    "./routes/dashboardRoutes"
+  );
+  const {
+  notFound,
+  errorHandler,
+} = require(
+  "./middleware/errorMiddleware"
+);
+const challengeRoutes =
+require(
+"./routes/challengeRoutes"
+);
+
+const submissionRoutes =
+require(
+"./routes/submissionRoutes"
+);
 const resultRoutes =
 require("./routes/resultRoutes");
 dotenv.config();
@@ -27,6 +46,10 @@ app.use(
   "/api/experiences",
   experienceRoutes
 );
+app.use(
+  "/api/dashboard",
+  dashboardRoutes
+);
 app.get("/", (req, res) => {
   res.send("Placement Prep Hub API Running");
 });
@@ -44,11 +67,22 @@ app.use(
   questionRoutes
 );
 app.use(
+"/api/challenges",
+challengeRoutes
+);
+
+app.use(
+"/api/submissions",
+submissionRoutes
+);
+app.use(
   "/api/leaderboard",
   leaderboardRoutes
 );
 const PORT = process.env.PORT || 5000;
+app.use(notFound);
 
+app.use(errorHandler);
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
