@@ -16,6 +16,8 @@ import Challenges from "./pages/Challenges";
 import ChallengeDetails from "./pages/ChallengeDetails";
 import MySubmissions from "./pages/MySubmissions";
 import CodingDashboard from "./pages/CodingDashboard";
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminUsers from "./pages/AdminUsers";
 
 function App() {
   return (
@@ -133,6 +135,22 @@ function App() {
           element={
             <ProtectedRoute>
               <CodingDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute>
+              <AdminDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/users"
+          element={
+            <ProtectedRoute>
+              <AdminUsers />
             </ProtectedRoute>
           }
         />

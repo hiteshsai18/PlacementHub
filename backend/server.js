@@ -15,6 +15,8 @@ const dashboardRoutes =
   require(
     "./routes/dashboardRoutes"
   );
+  const adminRoutes =
+require("./routes/adminRoutes");
   const {
   notFound,
   errorHandler,
@@ -29,6 +31,12 @@ require(
 const submissionRoutes =
 require(
 "./routes/submissionRoutes"
+);
+const adminUserRoutes =
+require("./routes/adminUserRoutes");
+const judgeRoutes =
+require(
+"./routes/judgeRoutes"
 );
 const resultRoutes =
 require("./routes/resultRoutes");
@@ -55,6 +63,10 @@ app.use(
 codingDashboardRoutes
 );
 app.use(
+  "/api/admin",
+  adminRoutes
+);
+app.use(
   "/api/dashboard",
   dashboardRoutes
 );
@@ -64,6 +76,10 @@ app.get("/", (req, res) => {
 app.use(
   "/api/companies",
   companyRoutes
+);
+app.use(
+"/api/judge",
+judgeRoutes
 );
 app.use(
   "/api/results",
@@ -86,6 +102,10 @@ submissionRoutes
 app.use(
   "/api/leaderboard",
   leaderboardRoutes
+);
+app.use(
+"/api/admin/users",
+adminUserRoutes
 );
 const PORT = process.env.PORT || 5000;
 app.use(notFound);

@@ -27,6 +27,26 @@ const challengeSchema =
         type: String,
         default: "",
       },
+
+      sampleInput: {
+        type: String,
+        default: "",
+      },
+
+      sampleOutput: {
+        type: String,
+        default: "",
+      },
+
+      constraints: {
+        type: String,
+        default: "",
+      },
+
+      explanation: {
+        type: String,
+        default: "",
+      },
     },
     {
       timestamps: true,

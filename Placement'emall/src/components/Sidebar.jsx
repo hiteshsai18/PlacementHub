@@ -42,7 +42,22 @@ function Sidebar() {
         <Link to="/experiences" style={{ color: "white" }}>
           Interview Experiences
         </Link>
-
+        <Link
+          to="/admin"
+          style={{
+            color: "white",
+          }}
+        >
+          Admin Panel
+        </Link>
+        <Link
+          to="/admin/users"
+          style={{
+            color: "white",
+          }}
+        >
+          Manage Users
+        </Link>
         <Link to="/profile" style={{ color: "white" }}>
           Profile
         </Link>
